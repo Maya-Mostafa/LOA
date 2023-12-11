@@ -1,0 +1,164 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+.LOA {
+  background-color: #fff;
+  h2{
+    font-weight: 600;
+    margin-bottom: -15px;
+    padding-top: 15px;
+    margin-top: 0;
+  }
+  .filterForm{
+    margin-bottom: 40px;
+    width: 98%;
+    input{
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
+      &::placeholder{
+        font-weight: normal;
+        font-size: 14px;
+      }
+    }
+    .resetSrchBtn{
+      float: right;
+      &::after{
+        content: " ";
+        clear: both;
+      }
+    }
+  }
+  .defautlLink{
+    color: #0173c6;
+    font-size: 14px;
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  div[id^=GroupedListSection] div[class^=ms-GroupHeader] {
+    margin-left: 35px;
+  }
+  div[id^=GroupedListSection] div[class^=ms-GroupHeader-title] {
+    margin-left: 0;
+  }
+
+  .formStatusCol{
+    display: flex;
+    align-content: stretch;
+    align-items: center;
+    span{
+      margin-left: 5px;
+    }
+  }
+
+  .srchBox{
+    i{
+      color: #323130;
+    }
+  }
+  .comboCntnr{
+    display: flex!important;
+    flex-direction: row;
+    align-items: baseline;
+    .comboIcon{
+      border-bottom: 1px solid #605e5c;
+      height: 23px;
+      border-radius: 0;
+      padding-left: 17px;
+    }
+    .comboStyle{
+      width: 100%;
+      div{
+        &::after{
+          border: none;
+          border-bottom: 1px solid #605e5c;
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+.formStatusCol{
+  display: flex;
+  align-content: stretch;
+  align-items: center;
+  span{
+    margin-left: 10px;
+  }
+}
+
+.schoolInfoCol{
+  display: flex;
+  b, span{
+    margin: 0 5px 5px 0;
+    display: inline-block;
+  }
+  a{
+    margin-right: 10px;
+    text-decoration: none;
+    color: #0072C6;
+  }
+  .schoolContacts{
+    margin-top: 5px;
+    svg svg{
+      display: none;
+    }
+  }
+  .schoolImageInfo{
+    display: block;
+    margin-right: 7px;
+    img{
+      border-radius: 100%;
+      height: 40px;
+      width: 40px;
+      box-shadow: 0px 0px 2px 1px #ddd;
+    }
+  }
+  .schoolTextInfo{
+    display: block;
+  }
+}
+
+.btnIcon{
+  cursor: pointer;
+  font-size: 15px;
+}
+.empDetails{
+  color: #888;
+  font-size: 12px;
+  margin-left: 68px;
+}
+
+.loaGrid{
+  display: block;
+}
+
+.historyTable{
+  margin-left: 35px;
+  td, th{
+    text-align: left;
+    padding: 3px 20px;
+  }
+  th{
+    color: #333;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  tr:nth-child(even) {
+    background: #f7f6f6;
+  }
+}
+
+.colExpCntnr{
+  position: relative;
+  i{
+    font-size: 16px;
+    font-weight: 600;
+    position: absolute;
+    z-index: 999;
+    right: 55px;
+    top: -33px;
+  }
+}
