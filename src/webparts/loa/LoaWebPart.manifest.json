@@ -24,9 +24,12 @@
     "properties": {
       "description": "LOA",
       "wpTitle" : "Search Applications",
-      "listUrl" : "https://pdsb1.sharepoint.com/sites/HRSpecialist",
-      "listName" : "MyForms",
-      "pageSize" : 200
+      "listUrl" : "",
+      "listName" : "",
+      "pageSize" : 100,
+      "showRefresh": true,
+      "refreshText": "Refresh View",
+      "refreshEvery5min": false
     }
   }]
 }

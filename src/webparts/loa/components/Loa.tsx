@@ -1,16 +1,19 @@
 import * as React from 'react';
 import styles from './Loa.module.scss';
 import { ILoaProps } from './ILoaProps';
-import {readAllLists, arrayUnique, getMyLocsDpd} from  '../Services/DataRequests';
+import {readAllLists, arrayUnique} from  '../Services/DataRequests';
 import IListItems from './IListItems/IListItems';
 import IFilterFields from './IFilterFields/IFilterFields';
+import { Icon, initializeIcons } from '@fluentui/react';
 
 export default function LOA (props: ILoaProps){
+
+  initializeIcons();
 
   const [listItems, setListItems] = React.useState([]);
   // const [schools, setSchools] = React.useState([]);
   const [formTitles, setFormTitles] = React.useState([]);
-  const [formLocationNos, setFormLocationNos] = React.useState([]);
+  // const [formLocationNos, setFormLocationNos] = React.useState([]);
   const [preloaderVisible, setPreloaderVisible] = React.useState(true);
   const [filterFields, setFilterFields] = React.useState({
     title: {key: "", text: ""},
@@ -25,20 +28,11 @@ export default function LOA (props: ILoaProps){
 
   React.useEffect(()=>{
     //getSchools(props.context, 'https://pdsb1.sharepoint.com/sites/contentTypeHub', 'schools', 400).then(r=>setSchools(r));
-    getMyLocsDpd(props.context, props.testingEmail).then(r=>{
-      setFormLocationNos(r.sort((a:any, b:any) => a.text.localeCompare(b.text)));
-    });
+    // getMyLocsDpd(props.context, props.testingEmail).then(r=>{
+    //   setFormLocationNos(r.sort((a:any, b:any) => a.text.localeCompare(b.text)));
+    // });
     readAllLists(props.context, props.listUrl, props.listName, props.pageSize).then((r: any) =>{
       console.log("all results", r);
-      /*const listItemsForms  : any = [];
-      r.flat().map(i=>{
-        if(i.length > 0){
-          listItemsForms.push({
-            key: i.title,
-            text: i.title
-          });
-        }
-      });*/
       const listItemsForms  : any = r.flat().map((item:any) => ({key: item.title, text: item.title}));
       console.log("listItemsForms", listItemsForms);
       setFormTitles(arrayUnique(listItemsForms, 'key').sort((a:any, b:any) => a.key.localeCompare(b.key)));
@@ -53,6 +47,8 @@ export default function LOA (props: ILoaProps){
         ["title"] : {key: formTitleParam, text: formTitleParam}
       }));
     }
+
+    if (props.refreshEvery5min) setInterval(refreshHandler, 300000);
 
   }, []);
 
@@ -87,6 +83,16 @@ export default function LOA (props: ILoaProps){
     window.history.replaceState({}, '', `${location.pathname}`);
   };
 
+  const refreshHandler = () => {
+    setPreloaderVisible(true);
+    readAllLists(props.context, props.listUrl, props.listName, props.pageSize).then((r: any) =>{
+      const listItemsForms  : any = r.flat().map((item:any) => ({key: item.title, text: item.title}));
+      setFormTitles(arrayUnique(listItemsForms, 'key').sort((a:any, b:any) => a.key.localeCompare(b.key)));
+      setListItems(r.flat());
+      setPreloaderVisible(false);
+    });
+  };
+
 
   return (
     <div className={ styles.LOA }>
@@ -97,8 +103,12 @@ export default function LOA (props: ILoaProps){
         onChangeFilterField={onChangeFilterField} 
         resetSrch={resetSrch}
         formTitlesOptions={formTitles}
-        formLocationNosOptions={formLocationNos}
+        // formLocationNosOptions={formLocationNos}
       />
+
+      {props.showRefresh && 
+        <a className={styles.refreshBtn} onClick={refreshHandler} href="javascript: void(0)"><Icon iconName='Refresh' />{props.refreshText}</a>
+      }
 
       <IListItems
         items = {listItems}
@@ -106,6 +116,7 @@ export default function LOA (props: ILoaProps){
         filterField = {filterFields}
         // schools = {schools}
         showEdit={props.showEdit}
+        context={props.context}
       />
     </div>
   );

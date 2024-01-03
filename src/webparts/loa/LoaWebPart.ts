@@ -13,8 +13,6 @@ import * as strings from 'LoaWebPartStrings';
 import Loa from './components/Loa';
 import { ILoaProps } from './components/ILoaProps';
 
-import { Providers, SharePointProvider } from '@microsoft/mgt-spfx';
-
 export interface ILoaWebPartProps {
   description: string;
   wpTitle: string;
@@ -23,6 +21,9 @@ export interface ILoaWebPartProps {
   pageSize: number;
   testingEmail: string;
   showEdit: boolean;
+  showRefresh: boolean;
+  refreshText: string;
+  refreshEvery5min: boolean;
 }
 
 export default class LoaWebPart extends BaseClientSideWebPart<ILoaWebPartProps> {
@@ -46,7 +47,11 @@ export default class LoaWebPart extends BaseClientSideWebPart<ILoaWebPartProps> 
         listName: this.properties.listName,
         pageSize: this.properties.pageSize,
         testingEmail: this.properties.testingEmail,
-        showEdit: this.properties.showEdit
+        showEdit: this.properties.showEdit,
+
+        showRefresh: this.properties.showRefresh,
+        refreshText: this.properties.refreshText,
+        refreshEvery5min: this.properties.refreshEvery5min
       }
     );
 
@@ -54,10 +59,6 @@ export default class LoaWebPart extends BaseClientSideWebPart<ILoaWebPartProps> 
   }
 
   protected onInit(): Promise<void> {
-
-    if (!Providers.globalProvider) {
-      Providers.globalProvider = new SharePointProvider(this.context);
-    }
     
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
@@ -146,6 +147,18 @@ export default class LoaWebPart extends BaseClientSideWebPart<ILoaWebPartProps> 
                 PropertyPaneCheckbox('showEdit', {
                   text: 'Show Edit Option',
                   checked: this.properties.showEdit
+                }),
+                PropertyPaneCheckbox('showRefresh', {
+                  text: 'Show Refresh View',
+                  checked: this.properties.showRefresh
+                }),
+                PropertyPaneTextField('refreshText', {
+                  label: 'Refresh Text',
+                  value: this.properties.refreshText,
+                }),
+                PropertyPaneCheckbox('refreshEvery5min', {
+                  text: 'Refresh View every 5 min',
+                  checked: this.properties.showRefresh
                 }),
               ]
             },

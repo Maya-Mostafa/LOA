@@ -80,6 +80,10 @@
   }
 }
 
+div[class^=stickyAbove]{
+  z-index: 99999;
+}
+
 .formStatusCol{
   display: flex;
   align-content: stretch;
@@ -128,7 +132,7 @@
 .empDetails{
   color: #888;
   font-size: 12px;
-  margin-left: 68px;
+  margin-left: 60px;
 }
 
 .loaGrid{
@@ -158,7 +162,20 @@
     font-weight: 600;
     position: absolute;
     z-index: 999;
-    right: 55px;
+    left: 13px;
     top: -33px;
+  }
+}
+
+.refreshBtn{
+  display: flex;
+  /* float: right; */
+  margin-bottom: 15px;
+  justify-content: flex-end;
+  i{
+    margin-right: 7px;
+    font-size: 15px;
+    font-weight: 600;
+    vertical-align: bottom;
   }
 }

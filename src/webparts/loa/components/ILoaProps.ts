@@ -14,4 +14,9 @@ export interface ILoaProps {
   pageSize: number;
   testingEmail: string;
   showEdit: boolean;
+
+  showRefresh: boolean;
+  refreshText: string;
+  refreshEvery5min: boolean;
+
 }
