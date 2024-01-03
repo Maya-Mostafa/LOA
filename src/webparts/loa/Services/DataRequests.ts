@@ -7,6 +7,10 @@ import "@pnp/sp/items";
 import "@pnp/sp/views";
 import "@pnp/sp/items/get-all";
 
+export const getEmpPicture = (email: string) => {
+  return `https://pdsb1.sharepoint.com/_layouts/15/userphoto.aspx?size=S&username=${email}`
+};
+
 const getImgStatus = (formStatus: string) =>{
   let imgStatusName: string, imgStatusText: string;
   formStatus.indexOf('_') !== -1 ? formStatus.replace(/ /g,'') : formStatus;
@@ -77,6 +81,10 @@ const getImgStatus = (formStatus: string) =>{
       imgStatusName = 'personRejected.svg';
       imgStatusText = 'Rejected by HR Partner';
       break;
+    case 'HRPartner_approved':
+      imgStatusName = 'personAccepted.svg';
+      imgStatusText = 'Approved by HR Partner';
+      break;
     case 'HRManager_inprogress':
       imgStatusName = 'submitted.svg';
       imgStatusText = 'Pending HR Manager';
@@ -92,6 +100,10 @@ const getImgStatus = (formStatus: string) =>{
     case 'HRExecutive_rejected':
       imgStatusName = 'personRejected.svg';
       imgStatusText = 'Rejected by HR Executive';
+      break;
+    case 'HRExecutive_approved':
+      imgStatusName = 'personAccepted.svg';
+      imgStatusText = 'Approved by HR Executive';
       break;
     //-LOA
 
@@ -177,6 +189,8 @@ const getListItems = async (context: WebPartContext, listItem: any, pageSize: nu
             absenceStart: item.FieldValuesAsText ? item.FieldValuesAsText.ParentInfo_x005f_x003a_x005f_AbsenceStart : null,
             absenceEnd: item.FieldValuesAsText ? item.FieldValuesAsText.ParentInfo_x005f_x003a_x005f_AbsenceEnd : null,
             parentId: item.FieldValuesAsText? item.FieldValuesAsText.ParentInfo_x005f_x003a_x005f_ID : null,
+            formDetails: item.FieldValuesAsText ? item.FieldValuesAsText.ParentInfo_x005f_x003a_x005f_FormDetailsFiel : null,
+            itemID: item.FieldValuesAsText ? item.FieldValuesAsText.ParentInfo_x005f_x003a_x005f_ItemID : null,
 
             contentTypeId: item.ContentTypeId,
             guid: item.GUID,
@@ -193,7 +207,7 @@ const getListItems = async (context: WebPartContext, listItem: any, pageSize: nu
       }
     }
   }catch(error){
-    console.log("MyLocation SPFx Error - Reading List Items: " + listItem.listName);
+    console.log("LOA SPFx Error - Reading List Items: " + listItem.listName);
   }
 
 
