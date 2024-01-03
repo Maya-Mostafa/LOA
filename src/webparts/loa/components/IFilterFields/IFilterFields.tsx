@@ -21,10 +21,12 @@ export default function IFilterFields (props: IFilterFieldsProps) {
         { key: 'HRSpecialist_rejected', text: 'Rejected by HR Specialist' },
         { key: 'HRPartner_inprogress', text: 'Pending HR Partner' },
         { key: 'HRPartner_rejected', text: 'Rejected by HR Partner' },
+        { key: 'HRPartner_approved', text: 'Approved by HR Partner' },
         { key: 'HRManager_inprogress', text: 'Pending HR Manager' },
         { key: 'HRManager_rejected', text: 'Rejected by HR Manager' },
         { key: 'HRExecutive_inprogress', text: 'Pending HR Executive' },
         { key: 'HRExecutive_rejected', text: 'Rejected by HR Executive' },
+        { key: 'HRExecutive_approved', text: 'Approved by HR Executive' },
         { key: 'Other', text: 'Other' },
     ];
 
@@ -43,6 +45,8 @@ export default function IFilterFields (props: IFilterFieldsProps) {
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/submitted.svg`)} /><span>{item.text}</span></div>;
             case 'HRPartner_rejected':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personRejected.svg`)} /><span>{item.text}</span></div>;
+            case 'HRPartner_approved':
+                return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personAccepted.svg`)} /><span>{item.text}</span></div>;
             case 'HRManager_inprogress':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/submitted.svg`)} /><span>{item.text}</span></div>;
             case 'HRManager_rejected':
@@ -51,6 +55,8 @@ export default function IFilterFields (props: IFilterFieldsProps) {
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/submitted.svg`)} /><span>{item.text}</span></div>;
             case 'HRExecutive_rejected':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personRejected.svg`)} /><span>{item.text}</span></div>;
+            case 'HRExecutive_approved':
+                return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personAccepted.svg`)} /><span>{item.text}</span></div>;
             case 'Other':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/other.svg`)} /><span>{item.text}</span></div>;
         }
