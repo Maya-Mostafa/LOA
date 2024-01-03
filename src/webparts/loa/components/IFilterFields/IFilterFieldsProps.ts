@@ -10,5 +10,5 @@ export interface IFilterFieldsProps{
     };
     resetSrch: any;    
     formTitlesOptions: any;
-    formLocationNosOptions: any;
+    // formLocationNosOptions: any;
 }
