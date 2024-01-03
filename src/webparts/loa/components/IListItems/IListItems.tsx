@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {IListItemsProps} from './IListItemsProps';
 import styles from '../Loa.module.scss';
-import {MessageBar, MessageBarType, Spinner, Icon, initializeIcons, DialogType, DetailsRow, IDetailsRowStyles} from '@fluentui/react';
+import {MessageBar, MessageBarType, Spinner, Icon, initializeIcons, DialogType, DetailsRow, IDetailsRowStyles, Persona} from '@fluentui/react';
 import { ListView, IViewField } from "@pnp/spfx-controls-react/lib/ListView";
 import { IFrameDialog  } from "@pnp/spfx-controls-react/lib/IFrameDialog";
-import { Person } from '@microsoft/mgt-react/dist/es6/spfx';
-import { ViewType, PersonCardInteraction } from '@microsoft/mgt-spfx';
 import '../LOA.scss';
 import { getTheme } from '@fluentui/react/lib/Styling';
+import { LivePersona } from "@pnp/spfx-controls-react/lib/LivePersona";
+import { getEmpPicture } from '../../Services/DataRequests';
 
 const MyRow = (props:any) => {
     const [expand, setExpand] = React.useState(false);
@@ -31,7 +31,7 @@ const MyRow = (props:any) => {
                             <tr key={field.Date}>
                                 <td>{new Date(field.Date).toLocaleString()}</td>
                                 <td>{field.HR}</td>
-                                <td>{field.Comments}</td>
+                                <td><div dangerouslySetInnerHTML={{__html: field.Comments}}/></td>
                                 <td>{field.Outcome}</td>
                                 <td>{field.NextStep}</td>
                             </tr>
@@ -74,8 +74,8 @@ export default function IListItems (props: IListItemsProps) {
         {
             name: 'title',
             displayName : 'Form Title',
-            minWidth: 200,
-            maxWidth: 250,
+            minWidth: 150,
+            maxWidth: 200,
             sorting: true,
             isResizable: true,
             render : (item: any) => (
@@ -89,6 +89,22 @@ export default function IListItems (props: IListItemsProps) {
             )
         },
         {
+            name: 'itemID',
+            displayName : 'Item ID',
+            minWidth: 100,
+            maxWidth: 120,
+            sorting: true,
+            isResizable: true,
+        },
+        {
+            name: 'formDetails',
+            displayName : 'Form Details',
+            minWidth: 150,
+            maxWidth: 200,
+            sorting: true,
+            isResizable: true,
+        },
+        {
             name: 'Employee',
             displayName: '',
             sorting: true,
@@ -97,16 +113,25 @@ export default function IListItems (props: IListItemsProps) {
             maxWidth: 200,
             render : (item: any) => (
                 <div>
-                    <Person 
-                        showPresence 
-                        personCardInteraction={ PersonCardInteraction.hover} 
-                        personQuery={item.fullName} 
-                        view={ViewType.threelines} 
-                    />
-                    <div className={styles.empDetails}>
-                        <div>{item.posGroup && item.posGroup}</div>
-                        <div>{item.empNumber && item.empNumber.toUpperCase()}</div>
-                    </div>
+                    <LivePersona upn={item.email}
+                        serviceScope={props.context.serviceScope as any}
+                        template={
+                          <>
+                            <Persona 
+                                text={item.fullName} 
+                                secondaryText={item.email} 
+                                coinSize={48} 
+                                imageUrl={getEmpPicture(item.email)}
+                            />
+                            <div className={styles.empDetails}>
+                                <div>{item.locName}</div>
+                                <div>{item.posGroup && item.posGroup}</div>
+                                <div>{item.empNumber && item.empNumber.toUpperCase()}</div>
+                            </div>
+                          </>
+                        }
+                      />
+                    
                 </div>
             )
         }
@@ -154,14 +179,7 @@ export default function IListItems (props: IListItemsProps) {
 
   return(
     <div>
-        <ListView
-            className={styles.loaGrid}
-            items={filteredItems}
-            viewFields={viewFields}
-            // groupByFields={groupByFields}
-            stickyHeader={true} 
-            onRenderRow={onRenderRowHandler}
-        />
+        
         {filteredItems.length === 0 && !props.preloaderVisible &&
             <MessageBar
                 messageBarType={MessageBarType.warning}
@@ -174,6 +192,15 @@ export default function IListItems (props: IListItemsProps) {
                 <Spinner label="Loading data, please wait..." ariaLive="assertive" labelPosition="right" />
             </div>
         }
+
+        <ListView
+            className={styles.loaGrid}
+            items={filteredItems}
+            viewFields={viewFields}
+            // groupByFields={groupByFields}
+            stickyHeader={true} 
+            onRenderRow={onRenderRowHandler}
+        />
 
         <IFrameDialog 
             url={formItem ? `${formItem.listUrl}/SitePages/PlumsailForms/${formItem.listName}/Item/EditForm.aspx?item=${formItem.id}`: ''}
