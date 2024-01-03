@@ -58,7 +58,9 @@ https://stackoverflow.com/questions/13815348/one-or-more-field-types-are-not-ins
 https://github.com/microsoft-search/pnp-modern-search/issues/1967
 https://github.com/microsoftgraph/microsoft-graph-toolkit/issues/971
 rush-stack compiler issue
-https://pnp.github.io/pnpjs/getting-started/#getting-started-with-sharepoint-framework
+https://pnp.github.io/pnpjs/getting-started/
+https://techcommunity.microsoft.com/t5/sharepoint-developer/tslint-is-not-supported-for-rush-stack-compiler-4-x-packages/m-p/3267711?lightbox-message-images-3270222=359565i736118A47DCD4BBE
+#getting-started-with-sharepoint-framework
 https://javascript.plainenglish.io/how-to-define-a-javascript-array-with-conditional-elements-cffd2d1ecef7
 https://github.com/pnp/pnpjs/issues/682
 https://codepen.io/jdh-msft/pen/PowORgm?editors=1010
