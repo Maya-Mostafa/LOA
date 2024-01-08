@@ -177,6 +177,11 @@ export default function IListItems (props: IListItemsProps) {
        
   };
 
+  const dialogDismissHandler = () => {
+    setVisIFrame(false);
+    props.refreshView();
+  };
+
   return(
     <div>
         
@@ -207,7 +212,7 @@ export default function IListItems (props: IListItemsProps) {
             width={'80%'}
             height={'80%'}
             hidden={!visIFrame}
-            onDismiss={() => setVisIFrame(false)}
+            onDismiss={dialogDismissHandler }
             allowFullScreen = {true}
             dialogContentProps={{
                 type: DialogType.close,

@@ -84,6 +84,7 @@ export default function LOA (props: ILoaProps){
   };
 
   const refreshHandler = () => {
+    console.log("refreshHandler!");
     setPreloaderVisible(true);
     readAllLists(props.context, props.listUrl, props.listName, props.pageSize).then((r: any) =>{
       const listItemsForms  : any = r.flat().map((item:any) => ({key: item.title, text: item.title}));
@@ -117,6 +118,7 @@ export default function LOA (props: ILoaProps){
         // schools = {schools}
         showEdit={props.showEdit}
         context={props.context}
+        refreshView = {refreshHandler}
       />
     </div>
   );

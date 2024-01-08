@@ -7,4 +7,5 @@ export interface IListItemsProps{
     // schools: any;
     showEdit: boolean;
     context: WebPartContext;
+    refreshView: any;
 }
